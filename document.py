@@ -69,10 +69,11 @@ class Scanner(object):
         contours = sorted(contours, key=cv2.contourArea, reverse=True)
 
         for cnt in contours:
-            epsilon = 0.051 * cv2.arcLength(cnt, True)
+            epsilon = 0.01 * cv2.arcLength(cnt, True)
             approx = cv2.approxPolyDP(cnt, epsilon, True)
 
-            if len(approx) == 4:
+            #if len(approx) == 4:
+            if len(approx) == 4 and cv2.arcLength(approx, True) > 400 and cv2.isContourConvex(approx):
                 target = approx
                 cv2.drawContours(image, [target], -1, (0, 255, 0), 2)
 
